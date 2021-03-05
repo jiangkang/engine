@@ -78,6 +78,8 @@ class MockDelegate : public PlatformView::Delegate {
   void OnPlatformViewDispatchPlatformMessage(fml::RefPtr<PlatformMessage> message) override {}
   void OnPlatformViewDispatchPointerDataPacket(std::unique_ptr<PointerDataPacket> packet) override {
   }
+  void OnPlatformViewDispatchKeyDataPacket(std::unique_ptr<KeyDataPacket> packet,
+                                           std::function<void(bool)> callback) override {}
   void OnPlatformViewDispatchSemanticsAction(int32_t id,
                                              SemanticsAction action,
                                              std::vector<uint8_t> args) override {}
@@ -91,7 +93,11 @@ class MockDelegate : public PlatformView::Delegate {
                                std::unique_ptr<const fml::Mapping> snapshot_data,
                                std::unique_ptr<const fml::Mapping> snapshot_instructions) override {
   }
-  void UpdateAssetManager(std::shared_ptr<AssetManager> asset_manager) override {}
+  void LoadDartDeferredLibraryError(intptr_t loading_unit_id,
+                                    const std::string error_message,
+                                    bool transient) override {}
+  void UpdateAssetResolverByType(std::unique_ptr<flutter::AssetResolver> updated_asset_resolver,
+                                 flutter::AssetResolver::AssetResolverType type) override {}
 };
 
 class MockIosDelegate : public AccessibilityBridge::IosDelegate {
